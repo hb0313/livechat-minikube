@@ -11,7 +11,7 @@ Microservices and Orchestration via building a simple two-tier live chat microse
 _Docker permission -_
 
 ```sh
-$ sudo chown "hbhandwaldar":"hbhandwaldar" /home/"$USER"/.docker -R
+$ sudo chown "$USER":"$USER" /home/"$USER"/.docker -R
 $ sudo chmod g+rwx "$HOME/.docker" -R
 ````
 
