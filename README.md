@@ -33,7 +33,7 @@ $ eval $(minikube docker-env)
 
 ```sh
 $ git clone https://github.com/hb0313/livechat-container.git
-$ cd livechat-container/mongodb && make build
+$ make build --directory ~/miniproject2-container/mongodb
 ```
 
 - Step 4 : Deploy mongodb minikube image
@@ -42,13 +42,11 @@ $ cd livechat-container/mongodb && make build
 $ git clone https://github.com/hb0313/livechat-minikube.git
 $ cd livechat-minikube
 $ kubectl apply -f mongodb-deploy.yaml
-$ kubectl apply -f serviceDB.yaml
 ```
 
 - Step 5 : Deploy mongodb service
 
 ```sh
-$ cd livechat-container/webserver && make build
 $ kubectl apply -f serviceDB.yaml
 $ kubectl get service
 ```
@@ -57,9 +55,14 @@ copy the external IP
 
 - Step 6 : Update the livechat-container/webserver/app/config.py and update the host: 'external_ip'
 
-- Step 7 : Deploy webserver minikube image
+```sh
+$ vi ~/miniproject2-container/webserver/app/config.py
+```
+
+- Step 7 : Deploy webserver minikube image and service
 
 ```sh
+$ make build --directory ~/miniproject2-container/webserver
 $ kubectl apply -f webserver-deploy.yaml
 $ kubectl apply -f serviceWEB.yaml
 ```
@@ -67,5 +70,5 @@ $ kubectl apply -f serviceWEB.yaml
 - Step 8 : Forward port to host (VM/GCP)
 
 ```sh
-$ kubectl port-forward –address 0.0.0.0 service/web-service 8080:8080
+$ kubectl port-forward --address 0.0.0.0 service/webserver-service 8080:8080
 ```
